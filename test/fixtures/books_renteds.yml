@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  books_inventory: one
+  rented_on: 2024-02-08
+  return_by: 2024-02-08
+  member: one
+  books_location: one
+
+two:
+  books_inventory: two
+  rented_on: 2024-02-08
+  return_by: 2024-02-08
+  member: two
+  books_location: two

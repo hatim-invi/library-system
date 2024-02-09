@@ -1,0 +1,30 @@
+<form action="/" method="get" accept-charset="UTF-8" class="w-full sm:w-5/6 mx-auto flex  justify-center">
+  <input id="query" name="query" type="text" class="sm:w-5/6 h-9 rounded-lg" placeholder="Search By Book Name"/>
+  <button name="commit" value="Search" class="px-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+    </svg>
+  </button>
+</form>
+<table class="table-auto w-full sm:w-5/6 mx-auto border-collapse border border-slate-500 mt-5">
+  <thead>
+    <tr class="text-center">
+      <th class="border border-slate-600 px-3 py-2">Sr.No.</th>
+      <th class="border border-slate-600 py-2">Book Name</th>
+      <th class="border border-slate-600 py-2">Author</th>
+      <th class="border border-slate-600 py-2">Genre</th>
+      <th class="border border-slate-600 px-3 py-2">published Year</th>
+    </tr>
+  </thead>
+  <tbody >
+    <% @home_display_books.each do |book| %>
+      <tr onclick="window.location='/<%= book.id %>';" class="cursor-pointer hover:bg-sky-100">
+        <td class="text-center border border-slate-700 py-1 "><%=book.id%></td>
+        <td class="text-left border border-slate-700 px-2 py-1 "><%=book.book_name%></td>
+        <td class="text-left border border-slate-700 py-1 px-2 "><%=book.author%></td>
+        <td class="text-center border border-slate-700 py-1 px-2 "><%=book.genre%></td>
+        <td class="text-center border border-slate-700 py-1 "><%=book.published_on.strftime("%Y")%></td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>

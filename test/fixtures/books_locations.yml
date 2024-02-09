@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  books_inventory: one
+  room: 1
+  section: 1
+  rack: 1
+  shelf: 1
+  is_there: false
+
+two:
+  books_inventory: two
+  room: 1
+  section: 1
+  rack: 1
+  shelf: 1
+  is_there: false

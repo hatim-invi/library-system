@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LibrarySystem</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body >
+    <h1 class="font-semibold text-gray-900 text-center mt-8 text-3xl tracking-wide">Novel Nook</h1>
+    <main class="container mb-5 mx-auto mt-10 flex flex-col">
+      <%= yield %>
+    </main>
+  </body>
+</html>
+<%# class="bg-gradient-to-r from-cyan-500 to-blue-500" %>

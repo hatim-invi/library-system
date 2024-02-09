@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  adhaar_no: 1
+  name: MyString
+  membership_start_date: 2024-02-08
+  membership_end_date: 2024-02-08
+  books_taken: false
+
+two:
+  adhaar_no: 1
+  name: MyString
+  membership_start_date: 2024-02-08
+  membership_end_date: 2024-02-08
+  books_taken: false

@@ -1,0 +1,65 @@
+<div class="px-4 sm:px-0">
+  <h3 class="text-base font-semibold leading-7 text-gray-900">Book Information</h3>
+  <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Book id: <%=@book_info.id%> </p>
+</div>
+<div class="mt-6 border-t border-gray-100">
+  <dl class="divide-y divide-gray-100">
+    <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">Book name</dt>
+      <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%=@book_info.book_name%> </dd>
+    </div>
+    <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">Author</dt>
+      <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%=@book_info.author%></dd>
+    </div>
+    <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">Published on</dt>
+      <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%=@book_info.published_on%> </dd>
+    </div>
+    <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">Genre</dt>
+      <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%=@book_info.genre%></dd>
+    </div>
+    <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">About</dt>
+      <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%=@book_info.about%></dd>
+    </div>
+    <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">Availability</dt>
+      <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+        <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+          <%if @book_locations_data.any?%>
+            <% @book_locations_data.each do |location|%>
+              <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                <div class="flex w-0 flex-1 items-center">
+                  <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                  </svg>
+                  <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                    <span class="tracking-wide text-gray-700">Room: <span class="font-medium"><%=location.room%></span>, 
+                      Section: <span class="font-medium"><%=location.section%></span>, Rack: <span class="font-medium"><%=location.rack%></span>,
+                      Shelf: <span class="font-medium"><%=location.shelf%></span></span>
+                  </div>
+                </div>
+              </li>
+            <%end%>
+          <%else%>
+            <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+              <div class="flex w-0 flex-1 items-center">
+                <svg class="h-5 w-5 flex-shrink-0 text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                </svg>
+                <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                  <span class="tracking-wide font-medium text-gray-700">Currently not available</span>
+                </div>
+                <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                  <span class="tracking-wide font-medium text-gray-700">Available By: <%=@books_rented.return_by%></span>
+                </div>
+              </div>
+            </li>
+          <%end%>
+        </ul>
+      </dd>
+    </div>
+  </dl>
+</div>
