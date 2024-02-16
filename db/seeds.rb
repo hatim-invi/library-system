@@ -1,55 +1,105 @@
+1000.times do
+  adhaar_number = Faker::Number.unique.number(digits: 12)
+  full_name = Faker::Name.name.split(' ')
+  name = full_name[0]
+  surname = full_name[1]
+  search_key_for_name = name.downcase
+  search_key_for_surname = surname.downcase
+  membership_start_date = Faker::Date.between(from: '2014-01-01', to: '2023-12-31')
+  membership_end_date = membership_start_date + rand(1..1000)
 
-
-Array.new(100) do
-  adhaar_no = "123456789012"
-  name = Faker::Name.name
-  membership_start_date = Faker::Date.backward(days: 365).strftime('%d/%m/%Y')
-  membership_end_date = (Date.parse(membership_start_date) + rand(1..365)).strftime('%d/%m/%Y')
-  books_taken = rand(0..5)
-
-  Member.create(adhaar_no: adhaar_no.to_i,name:name,membership_start_date: membership_start_date, membership_end_date: membership_end_date, books_taken: books_taken)
+  Member.create(
+    search_key_for_name: search_key_for_name,
+    search_key_for_surname: search_key_for_surname,
+    name: name,
+    surname: surname,
+    adhaar_number: adhaar_number,
+    membership_start_date: membership_start_date,
+    membership_end_date: membership_end_date
+  )
 end
 
+puts "Members created Successfully"
 
-Array.new(1000) do
-  book_name = Faker::Book.title
-  author_name = Faker::Book.author
-  days_in_range = (Date.new(2024, 12, 31) - Date.new(2000, 1, 1)).to_i
-  published_on = Faker::Date.backward(days: rand(0..days_in_range)).strftime('%d/%m/%Y')
-  quantity = rand(1..5)
+1000.times do
+  name = Faker::Book.title
+  author = Faker::Book.author
+  published_on = Faker::Date.between(from: '2010-01-01', to: '2023-12-31')
   about = Faker::Lorem.paragraph(sentence_count: rand(10..12))
   genre = ["Action", "Adventure", "Biography", "Comic", "Crime", "Drama", "Fantasy", "History", "Horror", "Mystery", "Romance","Sci-Fi","Self-Help","Thriller"].sample
 
-  BooksInventory.create(book_name: book_name, author: author_name, published_on: published_on, quantity: quantity, about: about, genre: genre)
+  Book.create(
+    name: name,
+    author: author,
+    published_on: published_on,
+    about: about,
+    genre: genre,
+    search_key_for_genre: genre.downcase,
+    search_key_for_name: name.downcase,
+    search_key_for_author: author.downcase
+  )
 end
 
-books_inventory_data = BooksInventory.all
+puts "Books created successfully"
 
-books_inventory_data.each do |book|
-    quantity = book.quantity
+rooms = [101,102,103,104]
 
-    quantity.times do
-      room = rand(1..9) * 100 + rand(1..9)
-      section = "#{rand(1..10)}#{('A'..'Z').to_a.sample}"
-      rack = rand(1..99)
-      shelf = rand(1..9)
 
-      BooksLocation.create(
-        books_inventory_id: book.id, room: room, section: section, rack: rack, shelf: shelf)
+rooms.each do |room|
+  ('A'..'D').each do |section|
+    (1..5).each do |rack|
+      (1..10).each do |shelf|
+        4.times do
+          BookLocation.create(room: room, section: section, rack: rack, shelf: shelf, availability: false)
+        end
+      end
     end
   end
+end
 
+puts "Books location created"
 
-available_books_locations = BooksLocation.all.pluck(:id, :books_inventory_id)
+books = Book.all
 
-shuffled_indices = (0...available_books_locations.length).to_a.shuffle
+books.each do |book|
+  rand(3..4).times do
+    book_location = BookLocation.where(availability: false).order("RANDOM()").first
+      book_location.update(book_id: book.id, availability: true)
+  end
+end
 
-shuffled_indices.each_with_index do |i, index|
-  id, books_inventory_id = available_books_locations[i]
+puts "Book Location Assigned"
 
-  rented_on = Faker::Date.backward(days: 365).strftime('%d/%m/%Y')
-  return_by = (Date.parse(rented_on) + rand(1..365)).strftime('%d/%m/%Y')
-  BooksRented.create(books_location_id: id, books_inventory_id: books_inventory_id, rented_on: rented_on, return_by: return_by, member_id: rand(1..100))
+shuffled_indices = (0...BookLocation.count).to_a.shuffle
+i = 0
+shuffled_indices.each do |index|
+  book_location = BookLocation.offset(index).first
+  rented_on = Faker::Date.backward(days: 365)
+  return_by = rented_on + rand(1..40).days # Return by date is within 40 days
+  member_id = rand(1..1000)
+  BookLocation.where(id: book_location.id).update(availability: false)
+  BookCheckoutRecord.create(
+    book_location_id: book_location.id,
+    book_id: book_location.book_id,
+    rented_on: rented_on,
+    return_by: return_by,
+    member_id: member_id
+  )
+  i=i+1
+  if(i>1000)
+    break
+  end
+end
 
-  break if index >= 999
+today = Date.today
+
+returned_records = BookCheckoutRecord.where('return_by < ?', today)
+returned_records.each_with_index do |record, index|
+  returned_at = if index % 50 == 0
+                  (record.return_by + rand(1..40).days).strftime('%Y-%m-%d') # Returned at date is within 40 days after return by date
+                else
+                  (record.return_by - rand(1..20).days).strftime('%Y-%m-%d') # Returned at date is within 20 days before return by date
+                end
+  record.update(returned_at: returned_at, is_returned: true)
+  BookLocation.find(record.book_location_id).update(availability: true)
 end

@@ -1,0 +1,41 @@
+<form class="w-full sm:w-4/6 mx-4 sm:mx-auto" action="/admin/members/" accept-charset="UTF-8" method = "post">
+  <div class="text-base text-sm py-4 font-medium leading-7 text-gray-700">Member Information</div>
+  <div class="flex ">
+    <div class="mb-5 w-1/2 me-3">
+      <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Name</label>
+      <input type="text" name = "member[name]" value="<%=@member.name%>" id="name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter name">
+      <% if @member.errors.has_key?(:name) %>
+        <p class="text-red-500 text-sm mt-1"><%= @member.errors[:name].first %></p>
+      <% end %>
+    </div>
+    <div class="mb-5 w-1/2 ms-3">
+      <label for="surname" class="block mb-2 text-sm font-medium text-gray-900 ">Surname</label>
+      <input type="text" name = "member[surname]" value="<%=@member.surname%>" id="surname" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter surname">
+      <% if @member.errors.has_key?(:surname) %>
+        <p class="text-red-500 text-sm mt-1"><%= @member.errors[:surname].first %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="mb-5">
+    <label for="adhaar_number" class="block mb-2 text-sm font-medium text-gray-900 ">Adhaar Number</label>
+    <input type="number" name="member[adhaar_number]" value="<%=@member.adhaar_number%>" id="adhaar_number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter adhaar number">
+    <% if @member.errors.has_key?(:adhaar_number) %>
+      <p class="text-red-500 text-sm mt-1"><%= @member.errors[:adhaar_number].first %></p>
+    <% end %>
+  </div>
+  <div class="mb-5">
+    <label for="membership_start_date" class="block mb-2 text-sm font-medium text-gray-900 ">Membership Start Date</label>
+    <input type="date" name="member[membership_start_date]"  value=<%= @member.membership_start_date%> id="membership_start_date" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+    <% if @member.errors.has_key?(:membership_start_date) %>
+      <p class="text-red-500 text-sm mt-1"><%= @member.errors[:membership_start_date].first %></p>
+    <% end %>
+  </div>
+  <div class="mb-5">
+    <label for="membership_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">Membership End Date</label>
+    <input type="date" name="member[membership_end_date]"  value=<%= @member.membership_end_date%> id="membership_start_date" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+    <% if @member.errors.has_key?(:membership_end_date) %>
+      <p class="text-red-500 text-sm mt-1"><%= @member.errors[:membership_end_date].first %></p>
+    <% end %>
+  </div>
+  <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create</button>
+</form>

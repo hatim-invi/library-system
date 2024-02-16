@@ -1,0 +1,50 @@
+<form class="w-full sm:w-4/6 mx-4 sm:mx-auto" action="/admin/books/<%=@book.id%>" accept-charset="UTF-8" method = "post">
+  <div class="text-base text-sm py-4 font-medium leading-7 text-gray-700">Book Information</div>
+  <input type="hidden" name="_method" value="Put">
+  <div class="mb-5">
+    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Book Name</label>
+    <input type="text" name = "book[name]"  value ="<%=@book.name%>" id="name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter book name">
+    <% if @book.errors.has_key?(:name) %>
+      <p class="text-red-500 text-sm mt-1"><%= @book.errors[:name].first %></p>
+    <% end %>
+  </div>
+  <div class="mb-5">
+    <label for="author" class="block mb-2 text-sm font-medium text-gray-900 ">Author </label>
+    <input type="text" name="book[author]" id="author" value ="<%=@book.author%>"  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter author name">
+    <% if @book.errors.has_key?(:author) %>
+      <p class="text-red-500 text-sm mt-1"><%= @book.errors[:author].first %></p>
+    <% end %>
+  </div>
+  <div class="mb-5 flex justify-between">
+    <div class="w-1/2 me-4">
+      <label for="published_on" class="block mb-2 text-sm font-medium text-gray-900 ">Published On</label>
+      <input type="date" name="book[published_on]"  id="published_on" value=<%= @book.published_on.strftime('%Y-%m-%d')%> class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+      <% if @book.errors.has_key?(:published_on) %>
+        <p class="text-red-500 text-sm mt-1"><%= @book.errors[:published_on].first %></p>
+      <% end %>
+    </div>
+    <div class="w-1/2 ms-4">
+      <label for="genre" class="block mb-2 text-sm font-medium text-gray-900 ">Genre</label>
+      <select id="genre" name="book[genre]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+        <%@genres.each do |genre|%>
+          <%if genre == @book.genre%>
+            <option value="<%=genre%>" selected><%=genre%></option>
+          <%else%>
+            <option value="<%=genre%>"><%=genre%></option>
+          <%end%>
+        <%end%>
+      </select>
+      <% if @book.errors.has_key?(:genre) %>
+        <p class="text-red-500 text-sm mt-1"><%= @book.errors[:genre].first %></p>
+      <% end %>
+    </div>
+  </div>
+  <div class="mb-5">
+    <label for="about" class="block mb-2 text-sm font-medium text-gray-900">About</label>
+    <textarea id="about" name="book[about]" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="What the book is about..."><%= @book.about %></textarea>
+    <% if @book.errors.has_key?(:about) %>
+      <p class="text-red-500 text-sm mt-1"><%= @book.errors[:about].first %></p>
+    <% end %>
+  </div>
+  <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update</button>
+</form>

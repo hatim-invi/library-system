@@ -1,6 +1,11 @@
-<div class="px-4 sm:px-0 w-full">
-  <h3 class="text-base font-semibold leading-7 text-gray-900">Book Information</h3>
-  <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Book id: <%=@book.id%> </p>
+<div class="px-4 sm:px-0 flex justify-between items-center w-full">
+  <div>
+    <h3 class="text-base font-semibold leading-7 text-gray-900">Book Information</h3>
+    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Book id: <%=@book.id%> </p>
+  </div>
+  <div>
+    <a href="/admin/books/<%=@book.id%>/edit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit</a>
+  </div>
 </div>
 <div class="mt-6 border-t border-gray-100">
   <dl class="divide-y divide-gray-100">
@@ -32,6 +37,41 @@
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Available</dd>
       <%end%>
     </div>
+    <%if @book_rented.any?%>
+      <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900 align-middle">Book rented to</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          <table class="table-auto w-full mx-auto text-sm text-left text-gray-500 ">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+              <tr>
+                <th scope="col" class="px-3 py-3 text-center">
+                  Sr.no.
+                </th>
+                <th scope="col" class="px-6 py-3 ">
+                  Name
+                </th>
+                <th scope="col" class="px-6 py-3 text-center">
+                  Rented on
+                </th>
+                <th scope="col" class="px-6 py-3 text-center">
+                  Return by
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @book_rented.each_with_index do |book, index| %>
+                <tr onclick="window.location='/admin/members/<%=book.member_id%>';" class="cursor-pointer hover:bg-sky-100 bg-white border-b ">
+                  <td  class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap text-center"><%=index+1%></td>
+                  <td class="px-6 py-4 "><%=@book_rented_to[index].name%> <%=@book_rented_to[index].surname%></td>
+                  <td class="px-6 py-4 text-center"><%=book.rented_on%></td>
+                  <td class="px-6 py-4 text-center"><%=book.return_by%></td>
+                </tr>
+              <%end%>
+            </tbody>
+          </table>
+        </dd>
+      </div>
+    <%end%>
     <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
       <dt class="text-sm font-medium leading-6 text-gray-900">Book Locations</dt>
       <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
@@ -63,7 +103,7 @@
                 </thead>
                 <tbody>
                   <% @book_location_data.each_with_index do |location, index| %>
-                    <tr class=" bg-white border-b ">
+                    <tr class="cursor-pointer hover:bg-sky-100 bg-white border-b ">
                       <td  class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap text-center"><%=index+1%></td>
                       <td class="px-3 py-4 text-center"><%=location.room%></td>
                       <td class="px-3 py-4 text-center"><%=location.section%></td>

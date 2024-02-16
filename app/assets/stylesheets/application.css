@@ -13,3 +13,30 @@
  *= require_tree .
  *= require_self
  */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+/* Style the pagination links */
+/* .pagination a {
+  padding: 0.5rem;
+  margin: 0 0.25rem;
+  border: 1px solid #ccc;
+  color: #333;
+  text-decoration: none;
+} */
+
+/* Style the active page */
+/* .pagination .active a {
+  background-color: #007bff;
+  color: #fff;
+} */
+
+/* Style the previous and next links */
+/* .pagination .previous a,
+.pagination .next a {
+  background-color: #007bff;
+  color: #fff;
+} */

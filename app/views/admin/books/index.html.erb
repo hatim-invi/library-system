@@ -1,11 +1,11 @@
-<form action="/" method="get" accept-charset="UTF-8" class="w-full sm:w-5/6 mx-auto flex  justify-center items-center">
+<form action="/admin/books" method="get" accept-charset="UTF-8" class="w-full sm:w-5/6 mx-auto flex  justify-center items-center">
   <select
     name="search_options"
     id="search_options"
     class="mt-1.5 w-1/6 rounded-lg border-gray-300 text-gray-700 sm:text-sm"
   >
     <option value="name" default >Book Name</option>
-    <option value="author">Author Name</option>
+    <option value="author">Author</option>
     <option value="published_on">Published Year</option>
     <option value="genre">Genre</option>
   </select>
@@ -34,16 +34,22 @@
       <th scope="col" class="px-6 py-3 text-center">
         Published Year
       </th>
+      <th scope="col" class="px-6 py-3">
+        <span class="sr-only">Edit</span>
+      </th>
     </tr>
   </thead>
   <tbody>
-    <% @books.each_with_index do |book, index| %>
-      <tr onclick="window.location='/<%= book.id %>';" class="cursor-pointer hover:bg-sky-100 bg-white border-b">
+    <% @books.each_with_index do |book,index| %>
+      <tr onclick="window.location='/admin/books/<%= book.id %>';" class="cursor-pointer hover:bg-sky-100 bg-white border-b">
         <td  class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap text-center"><%=index+1%></td>
         <td class="px-6 py-4"><%=book.name%></td>
         <td class="px-6 py-4"><%=book.author%></td>
         <td class="px-6 py-4 "><%=book.genre%></td>
         <td class="px-6 py-4 text-center"><%=book.published_on.strftime("%Y")%></td>
+        <td class="text-right" onclick="event.stopPropagation()">
+          <a href="/admin/books/<%=book.id%>/edit" class="font-medium text-blue-600 hover:underline px-4 py-4 " >Edit</a>
+        </td>
       </tr>
     <%end%>
   </tbody>

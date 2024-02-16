@@ -1,0 +1,103 @@
+<div class="px-4 sm:px-0 flex justify-between items-center w-full">
+  <div>
+    <h3 class="text-base font-semibold leading-7 text-gray-900">Member Information</h3>
+    <p class="mt-1 max-w-2xl text-sm leading-6 text-gray-500">Member id: <%=@member.id%> </p>
+  </div>
+  <div>
+    <a href="/admin/members/<%=@member.id%>/edit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit</a>
+  </div>
+</div>
+<div class="mt-6 border-t border-gray-100 w-full">
+  <dl class="divide-y divide-gray-100">
+    <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">Name</dt>
+      <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%=@member.name%> <%=@member.surname%></dd>
+    </div>
+    <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">Adhaar no.</dt>
+      <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%=@member.adhaar_number%></dd>
+    </div>
+    <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">Membership status</dt>
+      <%if @member.membership_end_date < Date.current%>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded  border border-red-400">Expired</span></dd>
+      <%else%>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-green-400">Active</span></dd>
+      <%end%>
+    </div>
+    <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">Membership start date</dt>
+      <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%=@member.membership_start_date%> </dd>
+    </div>
+    <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">Membership end date</dt>
+      <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%=@member.membership_end_date%></dd>
+    </div>
+    <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+      <dt class="text-sm font-medium leading-6 text-gray-900">Books taken</dt>
+      <dd class="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+        <ul role="list" class="divide-y divide-gray-100 rounded-md border border-gray-200">
+          <%if @books_taken.length>0%>
+            <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+              <div class="flex w-0 flex-1 items-center">
+                <table class="table-auto w-full mx-auto text-sm text-left text-gray-500 ">
+                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+                    <tr>
+                      <th scope="col" class="px-3 py-3 text-center">
+                        Sr.no.
+                      </th>
+                      <th scope="col" class="px-6 py-3">
+                        Book Name
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-center">
+                        Rented On
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-center">
+                        Return By
+                      </th>
+                      <th scope="col" class="px-6 py-3 text-center">
+                        Returned At
+                      </th>
+                      <th scope="col" class="px-3 py-3">
+                        <span class="sr-only">Status</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @books_taken.each_with_index do |book, index| %>
+                      <tr onclick="window.location='/admin/books/<%= @book_taken_info[index].id %>';" class="cursor-pointer hover:bg-sky-100 bg-white border-b ">
+                        <td  class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap text-center"><%=index+1%></td>
+                        <td class="px-6 py-4"><%=@book_taken_info[index].name%></td>
+                        <td class="px-6 py-4 text-center"><%=book.rented_on%></td>
+                        <td class="px-6 py-4 text-center"><%=book.return_by%></td>
+                        <td class="px-6 py-4 text-center"><%= book.returned_at.strftime('%Y-%m-%d') if book.returned_at.present? %></td>
+                        <%if book.returned_at==nil && book.return_by<Date.today%>
+                          <td class="px-3 py-4 bg-red-600"></td>
+                        <% elsif book.returned_at!=nil && book.returned_at<=book.return_by%>
+                          <td class="px-3 py-4 bg-green-600"></td>
+                        <%else%>
+                          <td class="px-3 py-4 bg-yellow-400"></td>
+                        <%end%>
+                      </tr>
+                    <%end%>
+                  </tbody>
+                </table>
+              </div>
+            </li>
+          <%else%>
+            <li class="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+              <div class="flex w-0 flex-1 items-center">
+                <svg class="h-5 w-5 flex-shrink-0 text-gray-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                </svg>
+                <div class="ml-4 flex min-w-0 flex-1 gap-2">
+                  <span class="tracking-wide font-medium text-gray-700">No Books Taken</span>
+                </div>
+              </div>
+            </li>
+          <%end%>
+        </ul>
+      </dd>
+    </div>
+  </dl>
+</div>

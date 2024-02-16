@@ -1,0 +1,49 @@
+<form action="/admin/members/" method="get" accept-charset="UTF-8" class="w-full sm:w-5/6 mx-auto flex  justify-center items-center">
+  <input id="query" name="query" type="text" class="sm:w-5/6 h-9 rounded-lg mt-1 ms-3" placeholder="Search by Name, Adhaar No."/>
+  <button name="commit" value="Search" class="px-3">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+    </svg>
+  </button>
+</form>
+<table class="table-auto w-full sm:w-5/6 mx-auto text-sm text-left mt-5 text-gray-500 ">
+  <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
+    <tr>
+      <th scope="col" class="px-3 py-3 text-center">
+        Sr No.
+      </th>
+      <th scope="col" class="px-6 py-3">
+        Name
+      </th>
+      <th scope="col" class="px-6 py-3 text-center">
+        Adhaar No.
+      </th>
+      <th scope="col" class="px-6 py-3 text-center">
+        Membership Status
+      </th>
+      <th scope="col" class="px-6 py-3">
+        <span class="sr-only">Edit</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @members.each_with_index do |member,index| %>
+      <tr onclick="window.location='/admin/members/<%= member.id %>';" class="cursor-pointer hover:bg-sky-100 bg-white border-b">
+        <td  class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap text-center"><%=index+1%></td>
+        <td class="px-6 py-4"><%=member.name%> <%=member.surname%></td>
+        <td class="px-6 py-4 text-center"><%=member.adhaar_number%></td>
+        <%if member.membership_end_date < Date.current%>
+          <td class="px-6 py-4 text-center"><span class="bg-red-100 text-red-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded  border border-red-400">Expired</span></td>
+        <%else%>
+          <td class="px-6 py-4 text-center"><span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-green-400">Active</span></td>
+        <%end%>
+        <td class="text-right" onclick="event.stopPropagation()">
+          <a href="/admin/members/<%=member.id%>/edit" class="font-medium text-blue-600 hover:underline px-4 py-4 " >Edit</a>
+        </td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
+<div class="mt-5 w-full sm:w-5/6 mx-auto">
+  <%= will_paginate @books,inner_window: 1, outer_window: 0%>
+  <div>

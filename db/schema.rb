@@ -10,55 +10,67 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_09_094110) do
-  create_table "books_inventories", force: :cascade do |t|
-    t.string "book_name", null: false
-    t.string "author", null: false
-    t.date "published_on", null: false
-    t.integer "quantity", default: 1, null: false
+ActiveRecord::Schema[7.1].define(version: 2024_02_16_035439) do
+  create_table "book_checkout_records", force: :cascade do |t|
+    t.integer "book_id"
+    t.date "rented_on"
+    t.date "return_by"
+    t.integer "member_id"
+    t.integer "book_location_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "about", null: false
-    t.string "genre", null: false
+    t.boolean "is_returned"
+    t.datetime "returned_at"
+    t.index ["book_id"], name: "index_book_checkout_records_on_book_id"
+    t.index ["book_location_id"], name: "index_book_checkout_records_on_book_location_id"
+    t.index ["member_id"], name: "index_book_checkout_records_on_member_id"
   end
 
-  create_table "books_locations", force: :cascade do |t|
-    t.integer "books_inventory_id", null: false
-    t.integer "room", null: false
-    t.string "section", null: false
-    t.integer "rack", null: false
-    t.integer "shelf", null: false
-    t.boolean "is_there", default: true, null: false
+  create_table "book_locations", force: :cascade do |t|
+    t.integer "book_id"
+    t.integer "room"
+    t.string "section"
+    t.integer "rack"
+    t.integer "shelf"
+    t.boolean "availability"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["books_inventory_id"], name: "index_books_locations_on_books_inventory_id"
+    t.index ["book_id"], name: "index_book_locations_on_book_id"
   end
 
-  create_table "books_renteds", force: :cascade do |t|
-    t.integer "books_inventory_id", null: false
-    t.date "rented_on", null: false
-    t.date "return_by", null: false
-    t.integer "member_id", null: false
-    t.integer "books_location_id", null: false
+  create_table "books", force: :cascade do |t|
+    t.string "name"
+    t.string "author"
+    t.date "published_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["books_inventory_id"], name: "index_books_renteds_on_books_inventory_id"
-    t.index ["books_location_id"], name: "index_books_renteds_on_books_location_id"
-    t.index ["member_id"], name: "index_books_renteds_on_member_id"
+    t.text "about"
+    t.string "genre"
+    t.string "search_key_for_name"
+    t.string "search_key_for_author"
+    t.string "search_key_for_genre"
+    t.index ["search_key_for_author"], name: "index_books_on_search_key_for_author"
+    t.index ["search_key_for_genre"], name: "index_books_on_search_key_for_genre"
+    t.index ["search_key_for_name"], name: "index_books_on_search_key_for_name"
   end
 
   create_table "members", force: :cascade do |t|
-    t.integer "adhaar_no", null: false
-    t.string "name", null: false
-    t.date "membership_start_date", null: false
-    t.date "membership_end_date", null: false
-    t.boolean "books_taken", default: false, null: false
+    t.integer "adhaar_number"
+    t.date "membership_start_date"
+    t.date "membership_end_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.string "surname"
+    t.string "search_key_for_name"
+    t.string "search_key_for_surname"
+    t.index ["adhaar_number"], name: "index_members_on_adhaar_number"
+    t.index ["search_key_for_name"], name: "index_members_on_search_key_for_name"
+    t.index ["search_key_for_surname"], name: "index_members_on_search_key_for_surname"
   end
 
-  add_foreign_key "books_locations", "books_inventories"
-  add_foreign_key "books_renteds", "books_inventories"
-  add_foreign_key "books_renteds", "books_locations"
-  add_foreign_key "books_renteds", "members"
+  add_foreign_key "book_checkout_records", "book_locations"
+  add_foreign_key "book_checkout_records", "books"
+  add_foreign_key "book_checkout_records", "members"
+  add_foreign_key "book_locations", "books"
 end

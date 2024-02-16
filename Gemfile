@@ -72,3 +72,5 @@ gem "tailwindcss-rails", "~> 2.3"
 gem "foreman", "~> 0.87.2"
 
 gem "htmlbeautifier", "~> 1.4"
+
+gem 'will_paginate', '~> 4.0'
