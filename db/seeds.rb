@@ -92,7 +92,7 @@ rackers.each do |rack|
   i = rack.maximum_shelf_capacity
   j=1;
   i.times do
-    Shelf.create(name: j.to_s, racker_id: rack.id, shelf_length_in_cm: rand(6..8)*10)
+    Shelf.create(name: j.to_s, racker_id: rack.id, shelf_length_in_cm: rand(10..12)*10)
     j=j+1
   end
 end
@@ -101,32 +101,24 @@ puts "Shelves created successfully"
 
 books = Book.all.shuffle
 shelves = Shelf.all.shuffle
-
-books.each do |book|
-  shelf_index = 0
-
-  # Create random number of copies for each book
-  num_copies = rand(3..7)
-
-  # Iterate to place each copy on a shelf
-  num_copies.times do
-    break if shelf_index >= shelves.length # Break if there are no more shelves
-
-    shelf = shelves[shelf_index]
-    shelf_length = shelf.shelf_length_in_cm
-
-    # Check if the book fits on the current shelf
-    if shelf_length >= book.book_width_in_cm
-      # Place the book on the shelf
-      BookCopy.create(shelf_id: shelf.id, book_id: book.id, availability: true)
-      shelf_length -= book.book_width_in_cm
-    else
-      # Move to the next shelf
-      shelf_index += 1
-      redo # Restart the loop with the next shelf
+i=0
+5.times do
+  books.each do |book|
+    if i>=shelves.length
+      i=0;
     end
+    shelf = shelves[i];
+    shelf_length = shelf.shelf_length_in_cm
+    shelf_length_occupied = BookCopy.joins(:book).where(shelf_id:shelf.id).sum("books.book_width_in_cm")
+    if shelf_length>=shelf_length_occupied+book.book_width_in_cm
+      BookCopy.create(shelf_id:shelf.id,availability:true,book_id:book.id)
+    else
+      puts book.id
+    end
+    i=i+1
   end
 end
+
 
 
 puts "Book Copies on location"
