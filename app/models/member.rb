@@ -1,28 +1,28 @@
 class Member < ApplicationRecord
-    has_many :book_checkout_record
-    before_validation :strip_whitespace
+  has_many :book_checkout_record
+  before_validation :strip_whitespace
 
-    def self.get_data(search_string)
-        data =[]
-        if search_string.present?
-          data = Member.where(
-            "search_key_for_name LIKE :search OR search_key_for_surname LIKE :search OR adhaar_number = :adhaar_number",
-            search: "#{search_string.downcase}%",
-            adhaar_number: search_string.to_i
-          )
-        else
-            data = Member.all
-        end
-    return data
-    end
+  def self.get_data(search_string)
+      data =[]
+      if search_string.present?
+        data = Member.where(
+          "search_key_for_name LIKE :search OR search_key_for_surname LIKE :search OR adhaar_number = :adhaar_number",
+          search: "#{search_string.downcase}%",
+          adhaar_number: search_string.to_i
+        )
+      else
+          data = Member.all
+      end
+  return data
+  end
 
-    validates :name, presence: true, format: { with: /\A[a-zA-Z\s.]+\z/, message: "only letters are allowed" }
-    validates :surname, presence: true, format: { with: /\A[a-zA-Z\s.]+\z/, message: "only letters are allowed" }
-    validates :adhaar_number, presence: true, length: {minimum: 12, maximum:12}, uniqueness: true
-    validates :membership_start_date, presence: true
-    validates :membership_end_date, presence:true
-    validate :end_date_after_start_date
-    validate :start_and_end_dates_are_dates
+  validates :name, presence: true, format: { with: /\A[a-zA-Z\s.]+\z/, message: "only letters are allowed" }
+  validates :surname, presence: true, format: { with: /\A[a-zA-Z\s.]+\z/, message: "only letters are allowed" }
+  validates :adhaar_number, presence: true, length: {minimum: 12, maximum:12}, uniqueness: true
+  validates :membership_start_date, presence: true
+  validates :membership_end_date, presence:true
+  validate :end_date_after_start_date
+  validate :start_and_end_dates_are_dates
 
   private
 

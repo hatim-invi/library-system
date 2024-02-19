@@ -110,22 +110,21 @@
 
     $newLocation.html(html);
     $('#selectLocationsContainer').append($newLocation);
-    initializeSelect2($newLocation.find('.room-select'), '/admin/book_locations/rooms', null,"No Location available");
-    initializeSelect2($newLocation.find('.section-select'), '/admin/book_locations/sections', function(params) {
+    initializeSelect2($newLocation.find('.room-select'), '/admin/book_copies/rooms', null,"No Location available");
+    initializeSelect2($newLocation.find('.section-select'), '/admin/book_copies/sections', function(params) {
         return {
             searchTerm: params.term,
             room: $(this).closest('.select-location').find('.room-select').val(),
-            a: 1,
         };
     }, "Select room first");
-    initializeSelect2($newLocation.find('.rack-select'), '/admin/book_locations/racks', function(params) {
+    initializeSelect2($newLocation.find('.rack-select'), '/admin/book_copies/racks', function(params) {
         return {
             searchTerm: params.term,
             room: $(this).closest('.select-location').find('.room-select').val(),
             section: $(this).closest('.select-location').find('.section-select').val()
         };
     },"Select section first");
-    initializeSelect2($newLocation.find('.shelf-select'), '/admin/book_locations/shelfs', function(params) {
+    initializeSelect2($newLocation.find('.shelf-select'), '/admin/book_copies/shelfs', function(params) {
         return {
             searchTerm: params.term,
             room: $(this).closest('.select-location').find('.room-select').val(),

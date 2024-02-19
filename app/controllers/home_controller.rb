@@ -5,6 +5,6 @@ class HomeController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-    (@book_location_data, @book_not_there) = BookLocation.get_locations(params[:id])
+    (@book_copies, @book_not_there) = BookCopy.get_copies(params[:id])
   end
 end

@@ -27,7 +27,7 @@
     <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
       <dt class="text-sm font-medium leading-6 text-gray-900">Availability</dt>
       <%if @book_not_there==true%>
-        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Available By: <%=@book_locations_data[0].return_by%></dd>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Available By: <%=@book_copies[0].return_by%></dd>
       <%else%>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Available</dd>
       <%end%>
@@ -62,14 +62,14 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% @book_location_data.each_with_index do |location, index| %>
+                  <% @book_copies.each_with_index do |copy, index| %>
                     <tr class=" bg-white border-b ">
                       <td  class="px-3 py-4 font-medium text-gray-900 whitespace-nowrap text-center"><%=index+1%></td>
-                      <td class="px-3 py-4 text-center"><%=location.room%></td>
-                      <td class="px-3 py-4 text-center"><%=location.section%></td>
-                      <td class="px-3 py-4 text-center"><%=location.rack%></td>
-                      <td class="px-3 py-4 text-center"><%= location.shelf%></td>
-                      <%if location.availability == false%>
+                      <td class="px-3 py-4 text-center"><%=copy.shelf.racker.section.room.name%></td>
+                      <td class="px-3 py-4 text-center"><%=copy.shelf.racker.section.name%></td>
+                      <td class="px-3 py-4 text-center"><%=copy.shelf.racker.name%></td>
+                      <td class="px-3 py-4 text-center"><%= copy.shelf.name%></td>
+                      <%if copy.availability == false%>
                         <td class="px-2 py-4 bg-red-600"></td>
                       <%else%>
                         <td class="px-2 py-4 bg-green-600"></td>

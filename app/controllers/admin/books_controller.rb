@@ -5,7 +5,7 @@ class Admin::BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-    (@book_location_data, @book_not_there) = BookLocation.get_locations(params[:id])
+    (@book_copies, @book_not_there) = BookCopy.get_copies(params[:id])
     @book_rented = BookCheckoutRecord.where(book_id: params[:id], returned_at: nil)
     if @book_rented.any?
       @book_rented_to = []
@@ -35,7 +35,6 @@ class Admin::BooksController < ApplicationController
     @book = Book.new
     @genres = ["Select a genre"]
     @genres += Book.get_genres()
-    @location = BookLocation.new
   end
 
   def create
@@ -54,12 +53,6 @@ end
   private
     def book_params
       params.require(:book).permit(:name, :author, :genre, :about, :published_on)
-    end
-
-    def location_params
-      params.require(:locations).map do |l|
-        l.permit(:room, :section, :rack, :shelf)
-      end
     end
 
 end

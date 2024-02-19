@@ -10,32 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_16_035439) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_19_083633) do
   create_table "book_checkout_records", force: :cascade do |t|
     t.integer "book_id"
     t.date "rented_on"
     t.date "return_by"
     t.integer "member_id"
-    t.integer "book_location_id"
+    t.integer "book_copy_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "is_returned"
     t.datetime "returned_at"
+    t.index ["book_copy_id"], name: "index_book_checkout_records_on_book_copy_id"
     t.index ["book_id"], name: "index_book_checkout_records_on_book_id"
-    t.index ["book_location_id"], name: "index_book_checkout_records_on_book_location_id"
     t.index ["member_id"], name: "index_book_checkout_records_on_member_id"
   end
 
-  create_table "book_locations", force: :cascade do |t|
+  create_table "book_copies", force: :cascade do |t|
     t.integer "book_id"
-    t.integer "room"
-    t.string "section"
-    t.integer "rack"
-    t.integer "shelf"
     t.boolean "availability"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["book_id"], name: "index_book_locations_on_book_id"
+    t.integer "shelf_id"
+    t.index ["book_id"], name: "index_book_copies_on_book_id"
+    t.index ["shelf_id"], name: "index_book_copies_on_shelf_id"
   end
 
   create_table "books", force: :cascade do |t|
@@ -49,6 +46,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_035439) do
     t.string "search_key_for_name"
     t.string "search_key_for_author"
     t.string "search_key_for_genre"
+    t.integer "book_width_in_cm"
     t.index ["search_key_for_author"], name: "index_books_on_search_key_for_author"
     t.index ["search_key_for_genre"], name: "index_books_on_search_key_for_genre"
     t.index ["search_key_for_name"], name: "index_books_on_search_key_for_name"
@@ -69,8 +67,46 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_16_035439) do
     t.index ["search_key_for_surname"], name: "index_members_on_search_key_for_surname"
   end
 
-  add_foreign_key "book_checkout_records", "book_locations"
+  create_table "rackers", force: :cascade do |t|
+    t.string "name"
+    t.integer "maximum_shelf_capacity"
+    t.integer "section_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["section_id"], name: "index_rackers_on_section_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.string "name"
+    t.integer "maximum_section_capacity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.string "name"
+    t.integer "maximum_rack_capacity"
+    t.integer "room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_sections_on_room_id"
+  end
+
+  create_table "shelves", force: :cascade do |t|
+    t.string "name"
+    t.integer "shelf_length_in_cm"
+    t.integer "racker_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["racker_id"], name: "index_shelves_on_racker_id"
+  end
+
+  add_foreign_key "book_checkout_records", "book_copies"
   add_foreign_key "book_checkout_records", "books"
   add_foreign_key "book_checkout_records", "members"
-  add_foreign_key "book_locations", "books"
+  add_foreign_key "book_copies", "books"
+  add_foreign_key "book_copies", "shelves"
+  add_foreign_key "rackers", "sections"
+  add_foreign_key "sections", "rooms"
+  add_foreign_key "shelves", "rackers"
 end

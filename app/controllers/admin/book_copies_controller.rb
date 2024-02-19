@@ -1,6 +1,8 @@
-class Admin::BookLocationsController < ApplicationController
+class Admin::BookCopiesController < ApplicationController
   def rooms
-    available_rooms = BookLocation.group(:room, :section, :rack, :shelf).having(availability:false).pluck(:room).group_by(&:itself).keys
+    current_book_width = 3
+    available_rooms = BookCopy.joins(:book,:shelf).group(:shelf_id).having('SUM(books.book_width_in_cm)+ ? < shelves.shelf_length_in_cm',current_book_width).pluck(:shelf_id)
+    puts available_rooms
     render json: available_rooms
   end
 

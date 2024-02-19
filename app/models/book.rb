@@ -1,5 +1,5 @@
 class Book < ApplicationRecord
-    has_many :book_location
+    has_many :book_copy
     has_many :book_checkout_record
     before_validation :strip_whitespace
 

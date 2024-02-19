@@ -4,11 +4,10 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :members
     resources :books
-    get 'book_locations', to: 'book_locations#index'
-    get 'book_locations/rooms'
-    get 'book_locations/sections'
-    get 'book_locations/racks'
-    get 'book_locations/shelfs'
+    get 'book_copies/rooms'
+    get 'book_copies/sections'
+    get 'book_copies/racks'
+    get 'book_copies/shelfs'
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
