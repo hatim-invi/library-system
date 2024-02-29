@@ -29,9 +29,11 @@ class Book < ApplicationRecord
     validates :published_on, presence: true
     validates :about, presence: true
     validates :genre, presence: true
+    validates :book_width_in_cm, presence:true,numericality:true
     validate :published_on_is_date
     validate :genre_in_list
     validate :unique_combination
+
 
   private
 

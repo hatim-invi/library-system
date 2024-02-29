@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -31,24 +32,46 @@
         <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
           <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white ">
             <li>
-              <a href="/admin/members" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Member Data</a>
+              <%if can? :read, Member%>
+                <a href="/admin/members" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 " aria-current="page">Member Data</a>
+              <%end%>
             </li>
             <li>
-              <a href="/admin/members/new" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Add Member</a>
+              <%if can? :create, Member%>
+                <a href="/admin/members/new" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Add Member</a>
+              <%end%>
             </li>
             <li>
-              <a href="/admin/books" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Book Inventory</a>
+              <%if can? :read, Book%>
+                <a href="/admin/books" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Book Inventory</a>
+              <%end%>
             </li>
             <li>
-              <a href="/admin/books/new" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Add Book</a>
+              <%if can? :create, Book%>
+                <a href="/admin/books/new" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 ">Add Book</a>
+              <%end%>
             </li>
           </ul>
         </div>
       </div>
     </nav>
-    <main class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 mt-24 flex-col">
+    <div class="text-grey-900 mt-24">
+      <%if current_user%>
+        logged in as <%=current_user.username%>
+        <form action="/logout" method="POST">
+          <input type="hidden" name= "_method" value="delete"/>
+          <button type="submit">Logout</button>
+        </form>
+      <%else%>
+        <a href="/signup">Sign up</a>
+        <a href="/login">login</a>
+      <%end%>
+    </div>
+    <main class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 flex-col mt-24">
+      <%= render 'shared/flash' %>
       <%= yield %>
     </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   </body>
 </html>
 <%# class="bg-gradient-to-r from-cyan-500 to-blue-500" %>

@@ -133,7 +133,10 @@ i = 0
 shuffled_indices.each do |index|
   member= members.sample
   book_copy = BookCopy.offset(index).first
-  rented_on = Faker::Date.between(from: member.membership_start_date, to: member.membership_end_date)
+range_end = [member.membership_end_date, Date.today].min
+
+rented_on = Faker::Date.between(from: member.membership_start_date, to: range_end)
+
   return_by = rented_on + rand(1..4)*7.days
   BookCopy.where(id: book_copy.id).update(availability: false)
   BookCheckoutRecord.create(

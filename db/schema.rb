@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_19_083633) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_28_110034) do
   create_table "book_checkout_records", force: :cascade do |t|
     t.integer "book_id"
     t.date "rented_on"
@@ -99,6 +99,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_19_083633) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["racker_id"], name: "index_shelves_on_racker_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "username"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "password_reset_token"
+    t.datetime "password_reset_sent_at"
+    t.string "role"
   end
 
   add_foreign_key "book_checkout_records", "book_copies"

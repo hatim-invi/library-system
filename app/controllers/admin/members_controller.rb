@@ -1,4 +1,6 @@
-class Admin::MembersController < ApplicationController
+class Admin::MembersController < AdminController
+  load_and_authorize_resource
+
   def index
     @members = Member.get_data(params[:query]).paginate(page: params[:page], per_page: 30)
   end
