@@ -32,7 +32,11 @@
     <div class="px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
       <dt class="text-sm font-medium leading-6 text-gray-900">Availability</dt>
       <%if @book_not_there==true%>
-        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Available By: <%=@book_locations_data[0].return_by%></dd>
+        <%if @book_locations_data.present?%>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Available By: <%=@book_locations_data[0].return_by%></dd>
+        <%else%>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Not Available</dd>
+        <%end%>
       <%else%>
         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">Available</dd>
       <%end%>

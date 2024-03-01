@@ -1,0 +1,12 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "book_errors") do |sheet|
+# Create header row for book_data keys
+book_data_header_row = @errors.first['book_data'].keys + ['error message']
+sheet.add_row(book_data_header_row)
+# Add data rows
+@errors.each do |error|
+# Add book data row
+book_data_row = error['book_data'].values + [error['error_message']]
+sheet.add_row(book_data_row)
+end
+end

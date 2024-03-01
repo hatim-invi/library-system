@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_28_110034) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_01_115024) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "book_checkout_records", force: :cascade do |t|
     t.integer "book_id"
     t.date "rented_on"
@@ -35,6 +38,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_28_110034) do
     t.index ["shelf_id"], name: "index_book_copies_on_shelf_id"
   end
 
+  create_table "book_upload_files", force: :cascade do |t|
+    t.string "file"
+    t.integer "total_entries"
+    t.integer "correct_entries", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.json "file_errors", default: [], array: true
+    t.boolean "completed", default: false
+    t.integer "wrong_entries", default: 0
+  end
+
   create_table "books", force: :cascade do |t|
     t.string "name"
     t.string "author"
@@ -52,8 +66,23 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_28_110034) do
     t.index ["search_key_for_name"], name: "index_books_on_search_key_for_name"
   end
 
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
   create_table "members", force: :cascade do |t|
-    t.integer "adhaar_number"
+    t.string "adhaar_number"
     t.date "membership_start_date"
     t.date "membership_end_date"
     t.datetime "created_at", null: false

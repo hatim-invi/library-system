@@ -43,7 +43,7 @@ class Admin::BooksController < AdminController
     @genres = ["Select a genre"]
     @genres += Book.get_genres()
 
-    @book = Book.new(book_params.merge(search_key_for_name: book_params[:name].downcase, search_key_for_author: book_params[:author].downcase, search_key_for_genre: book_params[:genre]))
+    # @book = Book.new(book_params.merge(search_key_for_name: book_params[:name].downcase, search_key_for_author: book_params[:author].downcase, search_key_for_genre: book_params[:genre]))
   #   if locations_params.blank? || locations_params.values.any? { |location| location.keys.sort != ['room', 'section', 'racker', 'shelf'] }
   #   @book.errors.add(:base, "Please provide valid location data for all locations")
   #   render :new, status: :unprocessable_entity

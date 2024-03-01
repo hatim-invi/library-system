@@ -9,7 +9,6 @@ gem "rails", "~> 7.1.3"
 gem "sprockets-rails"
 
 # Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 1.4"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
@@ -76,3 +75,17 @@ gem "htmlbeautifier", "~> 1.4"
 gem 'will_paginate', '~> 4.0'
 
 gem 'cancancan'
+
+gem 'carrierwave', '~> 3.0'
+
+gem "pg", "~> 1.5"
+
+gem "roo", "~> 2.10.0"
+gem 'creek'
+
+gem 'caxlsx_rails'
+gem 'axlsx'
+gem 'rubyzip'
+
+gem 'delayed_job_active_record'
+gem 'daemons'

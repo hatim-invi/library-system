@@ -2,6 +2,7 @@ class Book < ApplicationRecord
     has_many :book_copy
     has_many :book_checkout_record
     before_validation :strip_whitespace
+    before_validation :set_search_keys, on: :create
 
 
     def self.get_data(search_string, search_params)
@@ -24,8 +25,8 @@ class Book < ApplicationRecord
     end
 
 
-    validates :name, presence: true, format: { with: /\A[a-zA-Z0-9\s.]+\z/, message: "only letters and numbers are allowed" }
-    validates :author, presence: true, format: { with: /\A[a-zA-Z\s.]+\z/, message: "only letters are allowed" }
+    validates :name, presence: true, format: { with: /\A[a-zA-Z0-9\s.'-]+\z/, message: "only letters, numbers, spaces, dots, and single quotes are allowed" }
+    validates :author, presence: true, format: { with: /\A[a-zA-Z\s.'-]+\z/, message: "only letters, spaces, dots, and single quotes are allowed" }
     validates :published_on, presence: true
     validates :about, presence: true
     validates :genre, presence: true
@@ -59,6 +60,11 @@ class Book < ApplicationRecord
     if Book.exists?(name: name, author: author, published_on: published_on)
       errors.add(:base, "A book with the same name, author, and published on date already exists")
     end
+  end
+  def set_search_keys
+    self.search_key_for_name = name.downcase if name.present?
+    self.search_key_for_author = author.downcase if author.present?
+    self.search_key_for_genre = genre if genre.present?
   end
 
 end
