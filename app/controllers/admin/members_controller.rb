@@ -2,6 +2,7 @@ class Admin::MembersController < AdminController
   load_and_authorize_resource
 
   def index
+    @query = params[:query]
     @members = Member.get_data(params[:query]).paginate(page: params[:page], per_page: 30)
   end
   def show
@@ -34,12 +35,12 @@ class Admin::MembersController < AdminController
   def create
     @member = Member.new(member_params.merge(search_key_for_name: member_params[:name].downcase, search_key_for_surname: member_params[:surname].downcase))
 
-  if @member.save
-    redirect_to admin_member_path(@member)
-  else
-    render :new, status: :unprocessable_entity
+    if @member.save
+      redirect_to admin_member_path(@member)
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
-end
 
 
   private

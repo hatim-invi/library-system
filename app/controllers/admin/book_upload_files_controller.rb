@@ -17,7 +17,15 @@ class Admin::BookUploadFilesController < ApplicationController
     upload_file = BookUploadFile.new
     upload_file.file = params[:file]
     upload_file.save
-    BookUploadFile.add_books(upload_file.id)
-    redirect_to "/admin/books" , notice: "Adding Books to inventory"
+    BookUploadFile.delay.add_books(upload_file.id)
+    # redirect_to '/books/new', notice: "Adding books to inventory"
+  end
+
+  def progress
+    book_upload_file = BookUploadFile.last
+    if book_upload_file.completed
+      # redirect_to '/books/new', notice: "Books Added"
+    end
+    render json: book_upload_file
   end
 end

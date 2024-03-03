@@ -1,97 +1,72 @@
-<!-- <div class="mb-4 border-b border-gray-200 ">
+<div class="mb-4 border-b border-gray-200 ">
   <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
     <li class="me-2" role="presentation">
-      <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+      <button class="inline-block p-4 border-b-2 rounded-t-lg" id="single-tab" data-tabs-target="#single" type="button" role="tab" aria-controls="single" aria-selected="false">Single Upload</button>
     </li>
     <li class="me-2" role="presentation">
-      <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 " id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Dashboard</button>
-    </li>
-    <li class="me-2" role="presentation">
-      <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 " id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
-    </li>
-    <li role="presentation">
-      <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 " id="contacts-tab" data-tabs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false">Contacts</button>
+      <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="bundle-tab" data-tabs-target="#bundle" type="button" role="tab" aria-controls="bundle" aria-selected="false">Bundle Upload</button>
     </li>
   </ul>
 </div>
-<div id="default-tab-content">
-  <div class="hidden p-4 rounded-lg bg-gray-50" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-    <p class="text-sm text-gray-500 ">This is some placeholder content the <strong class="font-medium text-gray-800 ">Profile tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
-  </div>
-  <div class="hidden p-4 rounded-lg bg-gray-50" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
-    <p class="text-sm text-gray-500 ">This is some placeholder content the <strong class="font-medium text-gray-800 ">Dashboard tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
-  </div>
-  <div class="hidden p-4 rounded-lg bg-gray-50" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-    <p class="text-sm text-gray-500 ">This is some placeholder content the <strong class="font-medium text-gray-800 ">Settings tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
-  </div>
-  <div class="hidden p-4 rounded-lg bg-gray-50" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
-    <p class="text-sm text-gray-500 ">This is some placeholder content the <strong class="font-medium text-gray-800 ">Contacts tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
-  </div>
-</div>
--->
-<a href="/admin/book_upload_files.xlsx"> Download Error File</a>
-<form class="w-full sm:w-4/6 sm:mx-auto" action="/admin/book_upload_files/" accept-charset="UTF-8" method = "post" enctype="multipart/form-data">
-  <label class="block mb-2 text-sm font-medium text-gray-900" for="large_size">Large file input</label>
-  <input class="block w-full text-lg text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none " name="file" id="large_size" type="file">
-  <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Submit</button>
-</form>
-<form class="w-full sm:w-4/6 sm:mx-auto" action="/admin/books/" accept-charset="UTF-8" method = "post">
-  <div class="text-base text-sm py-4 font-medium leading-7 text-gray-700">Book Information</div>
-  <div class="mb-5">
-    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Book Name</label>
-    <input type="text" name = "book[name]"  value ="<%=@book.name%>" id="name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter book name">
-    <% if @book.errors.has_key?(:name) %>
-      <p class="text-red-500 text-sm mt-1"><%= @book.errors[:name].first %></p>
-    <% end %>
-  </div>
-  <div class="mb-5">
-    <label for="author" class="block mb-2 text-sm font-medium text-gray-900 ">Author </label>
-    <input type="text" name="book[author]" id="author" value ="<%=@book.author%>"  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter author name">
-    <% if @book.errors.has_key?(:author) %>
-      <p class="text-red-500 text-sm mt-1"><%= @book.errors[:author].first %></p>
-    <% end %>
-  </div>
-  <div class="mb-5 flex justify-between">
-    <div class="w-1/2 me-4">
-      <label for="published_on" class="block mb-2 text-sm font-medium text-gray-900 ">Published On</label>
-      <input type="date" name="book[published_on]"  value=<%=@book.published_on%> id="published_on"  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-      <% if @book.errors.has_key?(:published_on) %>
-        <p class="text-red-500 text-sm mt-1"><%= @book.errors[:published_on].first %></p>
-      <% end %>
-    </div>
-    <div class="w-1/2 ms-4">
-      <label for="genre" class="block mb-2 text-sm font-medium text-gray-900 ">Genre</label>
-      <select id="genre" name="book[genre]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-        <%@genres.each do |genre|%>
-          <%if genre == @book.genre%>
-            <option value="<%=genre%>" selected><%=genre%></option>
-          <%else%>
-            <option value="<%=genre%>"><%=genre%></option>
-          <%end%>
-        <%end%>
-      </select>
-      <% if @book.errors.has_key?(:genre) %>
-        <p class="text-red-500 text-sm mt-1"><%= @book.errors[:genre].first %></p>
-      <% end %>
-    </div>
-  </div>
-  <div class="mb-5">
-    <div class="flex items-center">
-      <label for="book_width_in_cm" class="block mb-2 text-sm font-medium text-gray-900 w-1/2">Book width in cm </label>
-      <input type="number" name="book[book_width_in_cm]" id="book_width_in_cm" value ="<%=@book.book_width_in_cm%>"  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 w-1/2" placeholder="Enter book_width_in_cm name">
-    </div>
-    <% if @book.errors.has_key?(:book_width_in_cm) %>
-      <p class="text-red-500 text-sm mt-1 text-center"><%= @book.errors[:book_width_in_cm].first %></p>
-    <% end %>
-  </div>
-  <div class="mb-5">
-    <label for="about" class="block mb-2 text-sm font-medium text-gray-900">About</label>
-    <textarea id="about" name="book[about]" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="What the book is about..."><%= @book.about %></textarea>
-    <% if @book.errors.has_key?(:about) %>
-      <p class="text-red-500 text-sm mt-1"><%= @book.errors[:about].first %></p>
-    <% end %>
-  </div>
-  <!-- <% if @book.errors.include?(:locations) %>
+<div id="default-tab-content" class="w-full">
+  <div class="hidden p-4 rounded-lg bg-gray-50 " id="single" role="tabpanel" aria-labelledby="single-tab">
+    <form class="w-full sm:w-4/6 sm:mx-auto" action="/admin/books/" accept-charset="UTF-8" method = "post">
+      <div class="text-base text-sm py-4 font-medium leading-7 text-gray-700">Book Information</div>
+      <div class="mb-5">
+        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Book Name</label>
+        <input type="text" name = "book[name]"  value ="<%=@book.name%>" id="name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter book name">
+        <% if @book.errors.has_key?(:name) %>
+          <p class="text-red-500 text-sm mt-1"><%= @book.errors[:name].first %></p>
+        <% end %>
+      </div>
+      <div class="mb-5">
+        <label for="author" class="block mb-2 text-sm font-medium text-gray-900 ">Author </label>
+        <input type="text" name="book[author]" id="author" value ="<%=@book.author%>"  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Enter author name">
+        <% if @book.errors.has_key?(:author) %>
+          <p class="text-red-500 text-sm mt-1"><%= @book.errors[:author].first %></p>
+        <% end %>
+      </div>
+      <div class="mb-5 flex justify-between">
+        <div class="w-1/2 me-4">
+          <label for="published_on" class="block mb-2 text-sm font-medium text-gray-900 ">Published On</label>
+          <input type="date" name="book[published_on]"  value=<%=@book.published_on%> id="published_on"  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+          <% if @book.errors.has_key?(:published_on) %>
+            <p class="text-red-500 text-sm mt-1"><%= @book.errors[:published_on].first %></p>
+          <% end %>
+        </div>
+        <div class="w-1/2 ms-4">
+          <label for="genre" class="block mb-2 text-sm font-medium text-gray-900 ">Genre</label>
+          <select id="genre" name="book[genre]" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+            <%@genres.each do |genre|%>
+              <%if genre == @book.genre%>
+                <option value="<%=genre%>" selected><%=genre%></option>
+              <%else%>
+                <option value="<%=genre%>"><%=genre%></option>
+              <%end%>
+            <%end%>
+          </select>
+          <% if @book.errors.has_key?(:genre) %>
+            <p class="text-red-500 text-sm mt-1"><%= @book.errors[:genre].first %></p>
+          <% end %>
+        </div>
+      </div>
+      <div class="mb-5">
+        <div class="flex items-center">
+          <label for="book_width_in_cm" class="block mb-2 text-sm font-medium text-gray-900 w-1/2">Book width in cm </label>
+          <input type="number" name="book[book_width_in_cm]" id="book_width_in_cm" value ="<%=@book.book_width_in_cm%>"  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 w-1/2" placeholder="Enter book_width_in_cm name">
+        </div>
+        <% if @book.errors.has_key?(:book_width_in_cm) %>
+          <p class="text-red-500 text-sm mt-1 text-center"><%= @book.errors[:book_width_in_cm].first %></p>
+        <% end %>
+      </div>
+      <div class="mb-5">
+        <label for="about" class="block mb-2 text-sm font-medium text-gray-900">About</label>
+        <textarea id="about" name="book[about]" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="What the book is about..."><%= @book.about %></textarea>
+        <% if @book.errors.has_key?(:about) %>
+          <p class="text-red-500 text-sm mt-1"><%= @book.errors[:about].first %></p>
+        <% end %>
+      </div>
+      <!-- <% if @book.errors.include?(:locations) %>
     <div class="text-red-600 mb-4 text-center">
       <%= @book.errors[:locations].first%>
     </div>
@@ -104,8 +79,113 @@
     <button type="button" id="removeLocation" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2 text-center w-1/3 ">Remove location</button>
   </div>
   -->
-  <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add</button>
-</form>
+      <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add</button>
+    </form>
+  </div>
+  <div class="hidden p-4 rounded-lg bg-gray-50 " id="bundle" role="tabpanel" aria-labelledby="bundle-tab">
+    <a href="/admin/book_upload_files.xlsx"> Download Error File</a>
+    <div class="w-full">
+      <div class="flex justify-between mb-1">
+        <span class="text-base font-medium text-blue-700 ">Flowbite</span>
+        <span class="text-sm font-medium text-blue-700 " id="progress-percent">100%</span>
+      </div>
+      <div class=" bg-gray-200 rounded-full h-2.5 ">
+        <div class="bg-blue-600 h-2.5 rounded-full" id="progress-bar" style="width: 100%"></div>
+      </div>
+    </div>
+    <div class="flex justify-between w-full">
+      <p>
+        <span>Total Entries</span>: <span id="total-entries">0</span>
+      </p>
+      <p>
+        <span>Correct Entries</span>: <span id="correct-entries">0</span>
+      </p>
+      <p>
+        <span>Wrong Entries</span>: <span id="wrong-entries">0</span>
+      </p>
+    </div>
+    <form class="w-full sm:w-4/6 sm:mx-auto" action="/admin/book_upload_files/" accept-charset="UTF-8" method = "post" enctype="multipart/form-data">
+      <div class="flex items-center justify-center w-full">
+        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 ">
+          <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <svg class="w-8 h-8 mb-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+            </svg>
+            <p class="mb-2 text-sm text-gray-500 font-semibold" id="filename">Click to upload <span class="font-normal">or drag and drop</span> </p>
+            <p class="text-xs text-gray-500 ">xlsx files only</p>
+          </div>
+          <input id="dropzone-file" type="file" class="hidden" name="file"/>
+        </label>
+      </div>
+      <button type="submit" id="book-excel-upload" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Submit</button>
+    </form>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+
+  let progressInterval;
+
+  async function updateProgress(correct_entries, wrong_entries, total_entries, completed) {
+    var percent = Math.floor(((correct_entries + wrong_entries) / total_entries) * 100);
+    if (!percent) percent = 0;
+    $('#total-entries').text(total_entries);
+    $('#correct-entries').text(correct_entries);
+    $('#wrong-entries').text(wrong_entries);
+    $('#progress-bar')[0].style.width = `${percent}%`;
+    $('#progress-percent').text(`${percent}%`);
+
+    localStorage.setItem('progressData', JSON.stringify({
+      correct_entries,
+      wrong_entries,
+      total_entries,
+      completed
+    }));
+
+    if (completed) {
+      clearInterval(progressInterval);
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      resetProgress();
+    }
+  }
+
+  function resetProgress() {
+    $('#total-entries').text("0");
+    $('#correct-entries').text("0");
+    $('#wrong-entries').text("0");
+    $('#progress-bar')[0].style.width = "0%";
+    $('#progress-percent').text('0%');
+  }
+
+  async function fetchProgress() {
+    try {
+      var response = await fetch('/admin/book_upload_files/progress')
+      var upload = await response.json()
+      updateProgress(upload.correct_entries, upload.wrong_entries, upload.total_entries, upload.completed)
+    } catch (e) {
+      console.log("Error fetching progress", e)
+    }
+  }
+
+  const progressData = localStorage.getItem('progressData');
+  if (progressData) {
+    const { total_entries, correct_entries, wrong_entries, completed } = JSON.parse(progressData);
+    updateProgress(correct_entries, wrong_entries, total_entries, completed)
+  }
+
+  $('#book-excel-upload').click(async function(){
+    clearInterval(progressInterval); // Clear previous interval before setting a new one
+    resetProgress();
+    progressInterval = setInterval(fetchProgress, 1000); // Set the interval
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    await fetchProgress();
+  });
+  $('#dropzone-file').on('change', function(){
+    var filename = $(this).val().split('\\').pop();
+    $('#filename').text(filename)
+  });
+  });
+</script>
 <!--
 <script>
 $(document).ready(function() {
@@ -217,3 +297,4 @@ if (locationCount <=1) {
   addLocation();
   });
 </script>
+-->

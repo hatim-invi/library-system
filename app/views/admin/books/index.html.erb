@@ -1,21 +1,4 @@
-<form action="/admin/books" method="get" accept-charset="UTF-8" class="w-full sm:w-5/6 mx-auto flex  justify-center items-center">
-  <select
-    name="search_options"
-    id="search_options"
-    class="mt-1.5 w-1/6 rounded-lg border-gray-300 text-gray-700 sm:text-sm"
-  >
-    <option value="name" default >Book Name</option>
-    <option value="author">Author</option>
-    <option value="published_on">Published Year</option>
-    <option value="genre">Genre</option>
-  </select>
-  <input id="query" name="query" type="text" class="sm:w-5/6 h-9 rounded-lg mt-1 ms-3" placeholder="Enter Search here"/>
-  <button name="commit" value="Search" class="px-3">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-    </svg>
-  </button>
-</form>
+  <%= render 'shared/book_search', query: @query, option: @option %>
 <table class="table-auto w-full sm:w-5/6 mx-auto text-sm text-left mt-5 text-gray-500 ">
   <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
     <tr>

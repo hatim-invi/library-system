@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :members
     resources :books
+    get 'book_upload_files/progress'
     resources :book_upload_files
     get 'book_copies/rooms'
     get 'book_copies/sections'

@@ -33,6 +33,6 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
-
+/public/uploads/book_upload_file
 /app/assets/builds/*
 !/app/assets/builds/.keep

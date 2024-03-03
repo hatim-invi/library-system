@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_01_115024) do
+ActiveRecord::Schema[7.1].define(version: 2024_03_02_122811) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "book_checkout_records", force: :cascade do |t|
-    t.integer "book_id"
+    t.bigint "book_id"
     t.date "rented_on"
     t.date "return_by"
-    t.integer "member_id"
-    t.integer "book_copy_id"
+    t.bigint "member_id"
+    t.bigint "book_copy_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "returned_at"
@@ -40,7 +40,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_01_115024) do
 
   create_table "book_upload_files", force: :cascade do |t|
     t.string "file"
-    t.integer "total_entries"
+    t.integer "total_entries", default: 0
     t.integer "correct_entries", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -99,7 +99,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_01_115024) do
   create_table "rackers", force: :cascade do |t|
     t.string "name"
     t.integer "maximum_shelf_capacity"
-    t.integer "section_id"
+    t.bigint "section_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["section_id"], name: "index_rackers_on_section_id"
@@ -115,7 +115,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_01_115024) do
   create_table "sections", force: :cascade do |t|
     t.string "name"
     t.integer "maximum_rack_capacity"
-    t.integer "room_id"
+    t.bigint "room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["room_id"], name: "index_sections_on_room_id"
@@ -124,7 +124,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_01_115024) do
   create_table "shelves", force: :cascade do |t|
     t.string "name"
     t.integer "shelf_length_in_cm"
-    t.integer "racker_id"
+    t.bigint "racker_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["racker_id"], name: "index_shelves_on_racker_id"

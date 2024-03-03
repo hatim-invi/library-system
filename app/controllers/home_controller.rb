@@ -1,5 +1,7 @@
 class HomeController < ApplicationController
   def index
+    @query = params[:query]
+    @option = params[:search_options]
     @books = Book.get_data(params[:query],params[:search_options]).paginate(page: params[:page], per_page: 30)
   end
 

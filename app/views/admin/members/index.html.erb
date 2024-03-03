@@ -1,9 +1,10 @@
-<form action="/admin/members/" method="get" accept-charset="UTF-8" class="w-full sm:w-5/6 mx-auto flex  justify-center items-center">
-  <input id="query" name="query" type="text" class="sm:w-5/6 h-9 rounded-lg mt-1 ms-3" placeholder="Search by Name, Adhaar No."/>
-  <button name="commit" value="Search" class="px-3">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+<form class="flex justify-center items-center sm:w-5/6 mx-auto w-full" action="/admin/members/" method="get" accept-charset="UTF-8">
+  <input type="text" id="simple-search" name="query" value="<%=@query%>" class="ps-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2.5 sm:w-5/6" placeholder="Search by Name, Adhaar No."/>
+  <button type="submit" class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">
+    <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
     </svg>
+    <span class="sr-only">Search</span>
   </button>
 </form>
 <table class="table-auto w-full sm:w-5/6 mx-auto text-sm text-left mt-5 text-gray-500 ">

@@ -8,7 +8,7 @@ class Member < ApplicationRecord
         data = Member.where(
           "search_key_for_name LIKE :search OR search_key_for_surname LIKE :search OR adhaar_number = :adhaar_number",
           search: "#{search_string.downcase}%",
-          adhaar_number: search_string.to_i
+          adhaar_number: search_string
         )
       else
           data = Member.all
